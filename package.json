@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/gbvanrenswoude/cdk8s-lookup-cloudformation-outputs.git"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A cdk8s lookup class that allows you to lookup CloudFormation outputs during synth time from CloudFormation stacks.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
