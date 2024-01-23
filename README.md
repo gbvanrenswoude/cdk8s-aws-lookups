@@ -1,4 +1,6 @@
-# AWS CloudFormation Stack Output Lookup for cdk8s
+# AWS Lookups for cdk8s
+
+## Cloudformation Outputs Lookup
 
 The `AwsCloudformationOutputs` is able to lookup any [`StackOutput`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html)
 defined by your deployed AWS CDK application. It does that by implementing the lookup Pattern of aws-cdk in cdk8s, using the `lookupOutput()` method.
@@ -18,7 +20,7 @@ Cloudformation client DescribeStacks returns outputs in the following format:
 
 The output information will be cached in cdk8s.context.json in the root of the project and the same output value will be used on future runs. To refresh the lookup, you will have to evict the value from the cache.
 
-## Usage:
+### Usage:
 
 You can simply use the `AwsCloudformationOutputs` class in your cdk8s project. The lookupOutput method will return the value of the output you are looking for at synthesis time.
 
@@ -90,6 +92,33 @@ class MyExampleChart extends Chart {
 }
 ```
 
-## TODO's
+## AWS SSM Parameters Lookup
 
-- improve working with the contextfile so it goes into the root of the cdk8s cli project, and isolates between values
+The `AwsSsmParameters` is able to lookup any [`SSM Parameter`](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html)
+defined by your deployed AWS CDK application. It does that by implementing the lookup Pattern of aws-cdk in cdk8s, using the `lookupParameter()` method.
+
+### Usage:
+
+```ts
+class MyTestChart extends Chart {
+  constructor(scope: Construct, id: string) {
+    super(scope, id);
+
+    const awsAccID = process.env.AWS_ACC_ID; // or pass in via constructor
+    const awsRegion = process.env.AWS_REGION || "eu-west-1";
+
+    const ssmParameters = new AwsSsmParameters(awsAccID, awsRegion);
+    const specificParameterValue = ssmParameters.lookupParameter("/aaa/test");
+
+    new ApiObject(this, "ConfigMap", {
+      apiVersion: "v1",
+      kind: "ConfigMap",
+      data: {
+        Outputs: {
+          SPECIFIC_PARAMETER_VALUE: specificParameterValue,
+        },
+      },
+    });
+  }
+}
+```

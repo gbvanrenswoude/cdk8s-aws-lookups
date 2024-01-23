@@ -1,11 +1,11 @@
 {
-  "name": "cdk8s-lookup-cloudformation-outputs",
+  "name": "cdk8s-aws-lookups",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gbvanrenswoude/cdk8s-lookup-cloudformation-outputs.git"
+    "url": "https://github.com/gbvanrenswoude/cdk8s-aws-lookups.git"
   },
-  "version": "0.0.3",
-  "description": "A cdk8s lookup class that allows you to lookup CloudFormation outputs during synth time from CloudFormation stacks.",
+  "version": "0.0.4",
+  "description": "A cdk8s lookup class that allows you to lookup AWS CloudFormation outputs and AWS SSM parameter values during synth time from CloudFormation stacks.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -20,6 +20,7 @@
     "cdk8s-lookup",
     "cdk8s-lookup-cloudformation-outputs",
     "cloudformation",
+    "ssm",
     "aws",
     "aws-cdk",
     "aws-sdk",
@@ -41,6 +42,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-cloudformation": "^3.496.0",
-    "@aws-sdk/client-sts": "^3.496.0"
+    "@aws-sdk/client-sts": "^3.496.0",
+    "@aws-sdk/client-ssm": "^3.496.0"
   }
 }

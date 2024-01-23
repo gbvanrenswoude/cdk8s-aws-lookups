@@ -1,6 +1,6 @@
 import { ApiObject, App, Chart, Testing } from "cdk8s";
 import { Construct } from "constructs";
-import { AwsCloudformationOutputs } from "../../src/lookup";
+import { AwsCloudformationOutputs, AwsSsmParameters } from "../../src/lookup";
 
 class MyTestChart extends Chart {
   constructor(scope: Construct, id: string) {
@@ -25,19 +25,23 @@ class MyTestChart extends Chart {
       "aadApplicationsRolesStatus"
     );
 
+    const ssmParameters = new AwsSsmParameters(awsAccID, awsRegion);
+    const specificParameterValue = ssmParameters.lookupParameter("/aaa/test");
+
     new ApiObject(this, "ConfigMap", {
       apiVersion: "v1",
       kind: "ConfigMap",
       data: {
         Outputs: {
           DATABASE_CONNECTION_STRING: databaseConnectionString,
+          SPECIFIC_PARAMETER_VALUE: specificParameterValue,
         },
       },
     });
   }
 }
 
-describe("MyChart", () => {
+describe("LookupCloudFormationOutput", () => {
   it("should set DATABASE_CONNECTION_STRING correctly in the ConfigMap", () => {
     const app = new App();
     const chart = new MyTestChart(app, "MyChart");
@@ -47,6 +51,20 @@ describe("MyChart", () => {
     const configMap = manifest.find((m) => m.kind === "ConfigMap");
     expect(configMap.data.Outputs.DATABASE_CONNECTION_STRING).toEqual(
       "Success"
+    );
+  });
+});
+
+describe("LookupSsmParameterStringValue", () => {
+  it("should set the SSM parameter value correctly in the ConfigMap", () => {
+    const app = new App();
+    const chart = new MyTestChart(app, "MyChart");
+
+    const manifest = Testing.synth(chart);
+
+    const configMap = manifest.find((m) => m.kind === "ConfigMap");
+    expect(configMap.data.Outputs.SPECIFIC_PARAMETER_VALUE).toEqual(
+      "123423adsfasdfadsadfsadfs"
     );
   });
 });
