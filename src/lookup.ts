@@ -54,7 +54,7 @@ export class AwsCloudformationOutputs {
     return resolvedValue;
   }
 
-  public createCompositeKey(outputName: string): string {
+  private createCompositeKey(outputName: string): string {
     return `${this.accountId}:${this.region}:${this.stackName}:${outputName}`;
   }
 
