@@ -67,7 +67,7 @@ export class AwsCloudformationOutputs {
   }
 
   private fetchOutputValue(stackName: string, outputName: string): string {
-    const script = path.join(__dirname, "..", "lib", "fetch-output-value.js");
+    const script = path.join(__dirname, "..", "dist", "fetch-output-value.js");
     return JSON.parse(
       execFileSync(
         process.execPath,
