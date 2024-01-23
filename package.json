@@ -7,6 +7,7 @@
   "version": "1.0.0",
   "description": "A cdk8s lookup class that allows you to lookup CloudFormation outputs during synth time from CloudFormation stacks.",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "jest",
