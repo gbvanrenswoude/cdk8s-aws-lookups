@@ -27,7 +27,7 @@ You can simply use the `AwsCloudformationOutputs` class in your cdk8s project. T
 ```ts
 import { Chart } from "cdk8s";
 import * as kplus from "cdk8s-plus";
-import { AwsCloudformationOutputs } from "cdk8s-lookup-cloudformation-outputs";
+import { AwsCloudformationOutputs } from "cdk8s-aws-lookups";
 
 class MyChart extends Chart {
   constructor(scope: Construct, id: string, stackName: string) {
@@ -56,7 +56,7 @@ class MyChart extends Chart {
 ```ts
 import { ApiObject, App, Chart, Testing } from "cdk8s";
 import { Construct } from "constructs";
-import { AwsCloudformationOutputs } from "cdk8s-lookup-cloudformation-outputs";
+import { AwsCloudformationOutputs } from "cdk8s-aws-lookups";
 
 class MyExampleChart extends Chart {
   constructor(scope: Construct, id: string) {
