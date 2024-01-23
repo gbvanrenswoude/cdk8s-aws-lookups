@@ -2,6 +2,7 @@
 **/*.ts
 !**/*.d.ts
 tsconfig.json
+jest.config.js
 
 # Ignore Test files
 test/**/*.ts
@@ -20,7 +21,6 @@ yarn-error.log*
 
 # Ignore package lock files
 package-lock.json
-yarn.lock
 
 .gitignore
 .git/
