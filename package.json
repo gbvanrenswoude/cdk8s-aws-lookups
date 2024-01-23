@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/gbvanrenswoude/cdk8s-lookup-cloudformation-outputs.git"
   },
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A cdk8s lookup class that allows you to lookup CloudFormation outputs during synth time from CloudFormation stacks.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,8 +14,19 @@
     "test:unit": "jest --color --testPathPattern=test/unit",
     "test:integration": "jest --color --testPathPattern=test/integration"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "cdk8s",
+    "cdk8s-plus",
+    "cdk8s-lookup",
+    "cdk8s-lookup-cloudformation-outputs",
+    "cloudformation",
+    "aws",
+    "aws-cdk",
+    "aws-sdk",
+    "lookup",
+    "lookup-cloudformation-outputs"
+  ],
+  "author": "Gijs van Renswoude",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^29.5.11",
