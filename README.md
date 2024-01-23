@@ -18,9 +18,6 @@ Cloudformation client DescribeStacks returns outputs in the following format:
 
 The output information will be cached in cdk8s.context.json in the root of the project and the same output value will be used on future runs. To refresh the lookup, you will have to evict the value from the cache.
 
-In this example, we create an S3 `Bucket` with the AWS CDK, and pass its (deploy time generated)
-name as an environment variable to a Kubernetes `CronJob` resource.
-
 ## Usage:
 
 You can simply use the `AwsCloudformationOutputs` class in your cdk8s project. The lookupOutput method will return the value of the output you are looking for at synthesis time.
