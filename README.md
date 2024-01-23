@@ -1,24 +1,13 @@
 # AWS Lookups for cdk8s
 
+This library provides a simple way to lookup AWS resources from your cdk8s project during synthesis time. Lookups are being cached in the `cdk8s.context.json` file in the root of your project. Values are looked up using the AWS SDK if they are not in the cache, and then if found, stored in the cache. Subsequent synth runs will then use the cached values. If you want to refresh the lookup, you will have to evict the value from the cache. You can do that by deleting the value from the `cdk8s.context.json` file, or to delete the whole file.
+
+In order to perform the lookup using the AWS SDK, you will need to have the AWS credentials set up on your machine. By default, the library will try to use the `aws-cdk` lookup pattern, which tries to sts assume the role pattern `arn:aws:iam::accountid:role/cdk-hnb659fds-lookup-role-accountid-region-id`, but if it fails to do so because this was not set up, it will use the standard AWS Credential flow for the lookup. If you are unfamiliar on how to configure credentials for AWS, please refer to the [AWS SDK documentation](https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-credentials-node.html) or the [AWS CDK documentation](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_auth).
+
 ## Cloudformation Outputs Lookup
 
 The `AwsCloudformationOutputs` is able to lookup any [`StackOutput`](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/outputs-section-structure.html)
 defined by your deployed AWS CDK application. It does that by implementing the lookup Pattern of aws-cdk in cdk8s, using the `lookupOutput()` method.
-
-Cloudformation client DescribeStacks returns outputs in the following format:
-
-```ts
-'Outputs': [
-  {
-      'OutputKey': 'string',
-      'OutputValue': 'string',
-      'Description': 'string',
-      'ExportName': 'string'
-  },
-],
-```
-
-The output information will be cached in cdk8s.context.json in the root of the project and the same output value will be used on future runs. To refresh the lookup, you will have to evict the value from the cache.
 
 ### Usage:
 
