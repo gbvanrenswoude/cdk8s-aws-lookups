@@ -19,7 +19,7 @@ export class AwsCloudformationOutputs {
    */
   private region: string;
   /**
-   * The file path of the context file used for caching output values.
+   * Optional file path of the context file used for caching output values.
    */
   private contextFilePath: string;
 
@@ -29,11 +29,17 @@ export class AwsCloudformationOutputs {
    * @param stackName The name of the CloudFormation stack.
    * @param region The AWS region the target CloudFormation stack resides in.
    */
-  constructor(accountId: string, stackName: string, region: string) {
+  constructor(
+    accountId: string,
+    stackName: string,
+    region: string,
+    contextFilePath?: string
+  ) {
     this.accountId = accountId;
     this.stackName = stackName;
     this.region = region;
-    this.contextFilePath = path.join(__dirname, "cdk8s.context.json");
+    this.contextFilePath =
+      contextFilePath || path.join(process.cwd(), "cdk8s.context.json");
   }
 
   /**

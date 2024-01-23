@@ -1,4 +1,4 @@
 node_modules
 dist
 .vscode
-src/cdk8s.context.json
+cdk8s.context.json
