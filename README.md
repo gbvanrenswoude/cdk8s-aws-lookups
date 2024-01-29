@@ -22,11 +22,10 @@ class MyChart extends Chart {
   constructor(scope: Construct, id: string, stackName: string) {
     super(scope, id);
 
-    const cfOutputs = new AwsCloudformationOutputs(
-      awsAccID,
-      stackName,
-      awsRegion
-    );
+    const cfOutputs = new AwsCloudformationOutputs(stackName, {
+      account: awsAccID,
+      region: awsRegion,
+    });
     const databaseConnectionString = cfOutputs.lookupOutput(
       "DatabaseConnectionString"
     );
@@ -61,11 +60,10 @@ class MyExampleChart extends Chart {
       );
     }
 
-    const cfOutputs = new AwsCloudformationOutputs(
-      awsAccID,
-      stackName,
-      awsRegion
-    );
+    const cfOutputs = new AwsCloudformationOutputs(stackName, {
+      account: awsAccID,
+      region: awsRegion,
+    });
     const databaseConnectionString = cfOutputs.lookupOutput("your-output-name");
 
     new ApiObject(this, "ConfigMap", {
@@ -96,7 +94,10 @@ class MyTestChart extends Chart {
     const awsAccID = process.env.AWS_ACC_ID; // or pass in via constructor
     const awsRegion = process.env.AWS_REGION || "eu-west-1";
 
-    const ssmParameters = new AwsSsmParameters(awsAccID, awsRegion);
+    const awsSsmParameters = new AwsSsmParameters({
+      account: awsAccID,
+      region: awsRegion,
+    });
     const specificParameterValue = ssmParameters.lookupParameter("/aaa/test");
 
     new ApiObject(this, "ConfigMap", {

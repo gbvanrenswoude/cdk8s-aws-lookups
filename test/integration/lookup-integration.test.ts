@@ -16,16 +16,18 @@ class MyTestChart extends Chart {
       );
     }
 
-    const cfOutputs = new AwsCloudformationOutputs(
-      awsAccID,
-      stackName,
-      awsRegion
-    );
+    const cfOutputs = new AwsCloudformationOutputs(stackName, {
+      account: awsAccID,
+      region: awsRegion,
+    });
     const databaseConnectionString = cfOutputs.lookupOutput(
       "aadApplicationsRolesStatus"
     );
 
-    const ssmParameters = new AwsSsmParameters(awsAccID, awsRegion);
+    const ssmParameters = new AwsSsmParameters({
+      account: awsAccID,
+      region: awsRegion,
+    });
     const specificParameterValue = ssmParameters.lookupParameter("/aaa/test");
 
     new ApiObject(this, "ConfigMap", {

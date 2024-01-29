@@ -24,11 +24,10 @@ describe("AwsCloudformationOutputs", () => {
   });
 
   it("should return the output value from context file if available", () => {
-    const awsCloudformationOutputs = new AwsCloudformationOutputs(
-      "123",
-      "myStack",
-      "us-east-1"
-    );
+    const awsCloudformationOutputs = new AwsCloudformationOutputs("myStack", {
+      account: "123",
+      region: "us-east-1",
+    });
 
     awsCloudformationOutputs["contextFilePath"] = "/path/to/cdk8s.context.json";
 
@@ -46,11 +45,10 @@ describe("AwsCloudformationOutputs", () => {
       },
     });
 
-    const awsCloudformationOutputs = new AwsCloudformationOutputs(
-      "123",
-      "myStack",
-      "us-east-1"
-    );
+    const awsCloudformationOutputs = new AwsCloudformationOutputs("myStack", {
+      account: "123",
+      region: "us-east-1",
+    });
     awsCloudformationOutputs["contextFilePath"] = "/path/to/cdk8s.context.json";
 
     const output = awsCloudformationOutputs.lookupOutput("newOutput");
@@ -64,7 +62,7 @@ describe("AwsCloudformationOutputs", () => {
         "myStack",
         "newOutput",
       ],
-      expect.anything()
+      { encoding: "utf-8", stdio: ["pipe"] }
     );
 
     const updatedContext = JSON.parse(
@@ -95,7 +93,10 @@ describe("AwsSsmParameters", () => {
   });
 
   it("should return the parameter value from context file if available", () => {
-    const awsSsmParameters = new AwsSsmParameters("123", "eu-west-1");
+    const awsSsmParameters = new AwsSsmParameters({
+      account: "123",
+      region: "eu-west-1",
+    });
     awsSsmParameters["contextFilePath"] = "/path/to/cdk8s.context.json";
 
     const parameterValue = awsSsmParameters.lookupParameter("someParameter");
@@ -114,7 +115,10 @@ describe("AwsSsmParameters", () => {
       },
     });
 
-    const awsSsmParameters = new AwsSsmParameters("123", "eu-west-1");
+    const awsSsmParameters = new AwsSsmParameters({
+      account: "123",
+      region: "eu-west-1",
+    });
     awsSsmParameters["contextFilePath"] = "/path/to/cdk8s.context.json";
 
     const parameterValue = awsSsmParameters.lookupParameter("newParameter");

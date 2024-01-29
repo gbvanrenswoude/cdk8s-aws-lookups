@@ -2,6 +2,11 @@ import { execFileSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 
+interface AwsCdkEnvironmentConfig {
+  account: string;
+  region: string;
+}
+
 /**
  * Represents a direct lookupable object for AWS SSM Parameter values.
  */
@@ -10,9 +15,9 @@ export class AwsSsmParameters {
   private region: string;
   private contextFilePath: string;
 
-  constructor(accountId: string, region: string, contextFilePath?: string) {
-    this.accountId = accountId;
-    this.region = region;
+  constructor(env: AwsCdkEnvironmentConfig, contextFilePath?: string) {
+    this.accountId = env.account;
+    this.region = env.region;
     this.contextFilePath =
       contextFilePath || path.join(process.cwd(), "cdk8s.context.json");
   }
@@ -68,38 +73,19 @@ export class AwsSsmParameters {
  * Represents a direct lookupable object for AWS CloudFormation outputs.
  */
 export class AwsCloudformationOutputs {
-  /**
-   * The AWS account ID the target CloudFormation stack resides in.
-   */
   private accountId: string;
-  /**
-   * The name of the CloudFormation stack.
-   */
   private stackName: string;
-  /**
-   * The AWS region the target CloudFormation stack resides in.
-   */
   private region: string;
-  /**
-   * Optional file path of the context file used for caching output values.
-   */
   private contextFilePath: string;
 
-  /**
-   * Constructs a new instance of AwsCloudformationOutputs.
-   * @param accountId The AWS account ID the target CloudFormation stack resides in.
-   * @param stackName The name of the CloudFormation stack.
-   * @param region The AWS region the target CloudFormation stack resides in.
-   */
   constructor(
-    accountId: string,
     stackName: string,
-    region: string,
+    env: AwsCdkEnvironmentConfig,
     contextFilePath?: string
   ) {
-    this.accountId = accountId;
+    this.accountId = env.account;
     this.stackName = stackName;
-    this.region = region;
+    this.region = env.region;
     this.contextFilePath =
       contextFilePath || path.join(process.cwd(), "cdk8s.context.json");
   }
